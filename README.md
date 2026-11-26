@@ -50,6 +50,45 @@ Each call is paid in USDC via x402 or MPP. tools/list is free. Invalid input is 
 
 The directory lists the rest of the fleet. To install, add a server URL as a Streamable HTTP MCP connector in Cline, Cursor, Claude, or VS Code. There is nothing to run locally.
 
+## Raise the default x402 spend cap
+
+`@x402/fetch` (and the `@x402/core` client it wraps) caps each payment at **$1** of recognized USD-pegged assets by default. That default covers the live $0.001–$0.01 USDC-on-Base routes below. It does **not** cover [THE $1,000 FLEX](https://fmf-flex-crown.fmf-x402.workers.dev/?ref=github) at `https://fmf-flex-crown.fmf-x402.workers.dev/v1/flex`, which quotes **$1,000 USDC on Base**, or **$500** when the settled payer wallet currently holds the crown.
+
+FMF Genesis is the 3-call founding boss on that board (4 calls dethrone it). A settled flex returns a numbered Proof-of-Flex trophy with dynamic ERC-721 metadata and a live SVG; if another caller later climbs past the rank you minted at, the artwork is marked `DEAD · OVERTAKEN`.
+
+Copy this snippet, attach your own Base signer (never commit a private key), and raise the cap:
+
+```ts
+import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { ExactEvmScheme } from "@x402/evm/exact/client";
+
+const client = new x402Client()
+  .register("eip155:8453", new ExactEvmScheme(signer))
+  .setSpendControls({ maxAmountPerPayment: "$1000" }); // default is "$1"
+
+const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+const res = await fetchWithPayment("https://fmf-flex-crown.fmf-x402.workers.dev/v1/flex");
+```
+
+Spend-control reference: [x402 Quickstart for Buyers](https://docs.x402.org/getting-started/quickstart-for-buyers). `tools/list` on our MCP endpoints is free; unpaid paid-routes return HTTP 402 and are not charged.
+
+### Live paid routes
+
+Prices checked live on 26 Nov 2026 (unpaid 402). Amounts are USDC on Base.
+
+| Route | Price | URL |
+|---|---|---|
+| Control-plane snapshot | $0.01 | https://controlplane-x402.fmf-x402.workers.dev/v1/controlplane |
+| Black Friday Deals Finder | $0.003 | https://black-friday-deals.fmf-x402.workers.dev/deals |
+| Black Friday Deal Monitor | $0.01 | https://black-friday-deal-monitor.fmf-x402.workers.dev/watch |
+| JSON Schema (pro) | $0.001 | https://mpp-tools.fmf-x402.workers.dev/mpp/pro/data/json-schema |
+| Soft-404 / link-rot | $0.002 | https://soft-404-link-classifier.fmf-x402.workers.dev/v1/link-rot |
+| Geocode (OpenWeather-compatible) | $0.001 | https://mpp-compat.fmf-x402.workers.dev/openweather/geocode |
+| Domain age | $0.001 | https://mpp-domain.fmf-x402.workers.dev/domain/age |
+| UUID | $0.001 | https://mpp-utils.fmf-x402.workers.dev/id/uuid |
+| EVM selector | $0.001 | https://mpp-chain.fmf-x402.workers.dev/mpp/evm/selector |
+| THE $1,000 FLEX | $1,000 ($500 if the settled payer holds the crown) | https://fmf-flex-crown.fmf-x402.workers.dev/v1/flex |
+
 ## Agent skills
 
 One skill per parent tool, under [skills/](skills/). Install with the skills CLI, or add the origin to AgentCash:
