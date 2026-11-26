@@ -48,4 +48,24 @@ Each call is paid in USDC via x402 or MPP. tools/list is free. Invalid input is 
 
 The directory lists the rest of the fleet. To install, add a server URL as a Streamable HTTP MCP connector in Cline, Cursor, Claude, or VS Code. There is nothing to run locally.
 
+## Agent skills
+
+One skill per parent tool, under [skills/](skills/). Install with the skills CLI, or add the origin to AgentCash:
+
+| Skill | Call | Price | Install |
+|---|---|---|---|
+| [fmf-read](skills/fmf-read/SKILL.md) | `POST https://fmf-read.fmf-x402.workers.dev/mpp/read` | $0.003 | `npx skills add GeminiGeorge22/fmf-tools --skill fmf-read` |
+| [fmf-pick](skills/fmf-pick/SKILL.md) | `GET https://agent-recipes.fmf-x402.workers.dev/mpp/pick` | $0.005 | `npx skills add GeminiGeorge22/fmf-tools --skill fmf-pick` |
+| [fmf-domain-report](skills/fmf-domain-report/SKILL.md) | `POST https://mpp-domain.fmf-x402.workers.dev/mpp/domain/report` | $0.005 | `npx skills add GeminiGeorge22/fmf-tools --skill fmf-domain-report` |
+| [fmf-package-check](skills/fmf-package-check/SKILL.md) | `POST https://npm-pre-install-report.fmf-x402.workers.dev/mpp/package/check` | $0.005 | `npx skills add GeminiGeorge22/fmf-tools --skill fmf-package-check` |
+
+AgentCash:
+
+```bash
+npx agentcash add https://fmf-read.fmf-x402.workers.dev
+npx agentcash add https://agent-recipes.fmf-x402.workers.dev
+npx agentcash add https://mpp-domain.fmf-x402.workers.dev
+npx agentcash add https://npm-pre-install-report.fmf-x402.workers.dev
+```
+
 Contact: fmf-tools@agentmail.to
