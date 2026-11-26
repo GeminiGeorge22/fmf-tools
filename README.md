@@ -6,6 +6,8 @@ FMF Tools is a catalog of remote MCP servers and pay-per-call APIs for agents.
 
 Full catalog (retested daily): https://tools.fmf-x402.workers.dev/?ref=github
 
+As of 26 Nov 2026 the catalog lists 37,467 live-tested MCP servers and 3,709 live-tested paid APIs, including 130 first-party tools (144,026 verified or registry MCP catalog entries). Counts: https://tools.fmf-x402.workers.dev/api/summary.json and https://tools.fmf-x402.workers.dev/api/coverage.json
+
 Directory MCP: `https://tools.fmf-x402.workers.dev/mcp`
 
 Logo (400×400): [logo-400.png](logo-400.png)
