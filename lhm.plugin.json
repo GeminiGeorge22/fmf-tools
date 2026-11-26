@@ -1,0 +1,183 @@
+{
+  "identifier": "fmf-tools",
+  "name": "FMF Tools Directory",
+  "version": "0.2.0",
+  "author": "FMF Tools",
+  "authorUrl": "https://github.com/GeminiGeorge22/fmf-tools",
+  "category": "developer",
+  "cloudEndpoint": "https://tools.fmf-x402.workers.dev/mcp",
+  "description": "Catalog of FMF Tools MCP and pay-per-call APIs. tools/list is free. tools/call is pay-per-call.",
+  "homepage": "https://tools.fmf-x402.workers.dev/?ref=lobehub",
+  "icon": "https://raw.githubusercontent.com/GeminiGeorge22/fmf-tools/main/logo-400.png",
+  "tags": [
+    "mcp",
+    "catalog",
+    "directory",
+    "pay-per-call"
+  ],
+  "tools": [
+    {
+      "name": "best_tool_for",
+      "description": "Find the best verified MCP server and/or pay-per-call API (x402/MPP) for a task, e.g. \"web scraping\", \"token prices\", \"transcribe audio\". Returns ranked picks with live test evidence.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "What the user wants to do"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "any",
+              "mcp",
+              "paid"
+            ],
+            "default": "any"
+          }
+        },
+        "required": [
+          "task"
+        ]
+      }
+    },
+    {
+      "name": "search_tools",
+      "description": "Keyword search across all MCP servers and paid agent APIs that passed today's tests.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "mcp",
+              "paid"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "default": 10,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "get_tool",
+      "description": "Full record for one listing: connection URL, every test result, usage signals, score breakdown.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "list_categories",
+      "description": "All categories with counts and the current best pick in each.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "compare_tools",
+      "description": "Side-by-side comparison of 2-5 listings (ids from search_tools/best_tool_for): live status, uptime, latency, tool count, price, auth, license.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "maxItems": 5
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      }
+    },
+    {
+      "name": "install_snippet",
+      "description": "Copy-paste install config for one listing in a given client: claude-code, claude-desktop, cursor, vscode, windsurf, gemini-cli, codex, zed (paid APIs: curl / x402-fetch).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "client": {
+            "type": "string",
+            "enum": [
+              "claude-code",
+              "claude-desktop",
+              "cursor",
+              "vscode",
+              "windsurf",
+              "gemini-cli",
+              "codex",
+              "zed",
+              "curl",
+              "x402-fetch",
+              "all"
+            ],
+            "default": "all"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "search_catalog",
+      "description": "Search the full deduped index (official MCP Registry, npm, GitHub awesome-lists, x402 Bazaar, MPP catalogs), including entries not yet live-tested. tested=true rows passed our live tests; verification says how each entry is known to be a real MCP server/API (tested, registry, docker-catalog, npm-verified, github-verified, npm-likely, github-topic, npm-name-only, curated-list, payment-indexer).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "verified_only": {
+            "type": "boolean",
+            "default": false,
+            "description": "only tested, official-registry, Docker-catalog, npm-verified, GitHub-verified or payment-indexer entries"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mcp",
+              "x402",
+              "mpp"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "default": 10,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    }
+  ]
+}

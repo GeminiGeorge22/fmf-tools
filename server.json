@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.GeminiGeorge22/fmf-tools",
+  "title": "FMF Tools Utilities",
+  "description": "Pay-per-call DNS, WHOIS/RDAP, SSL, HTTP headers, IP/ASN, diffs and IP geo. No API key.",
+  "version": "1.1.0",
+  "websiteUrl": "https://mpp-tools.fmf-x402.workers.dev/go/mcp-registry-tools",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mpp-tools.fmf-x402.workers.dev/mcp"
+    }
+  ]
+}
